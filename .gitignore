@@ -1,0 +1,12 @@
+# Large data files
+data/*.csv
+
+# Jupyter notebook checkpoints (recursively ignore everywhere)
+**/.ipynb_checkpoints/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Images
+images/

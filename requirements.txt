@@ -1,0 +1,22 @@
+# Python dependencies
+boto3==1.38.23
+gprofiler_official==1.0.0
+gseapy==1.1.8
+matplotlib==3.10.3
+numpy==1.24.4
+pandas==2.2.3
+rpy2==3.6.0
+scikit_learn==1.6.1
+scipy==1.15.3
+seaborn==0.13.2
+
+# R dependencies (required to run DESeq2 pipeline):
+- R (version ≥ 4.0)
+- DESeq2 (via Bioconductor)
+    Installation:
+    if (!requireNamespace("BiocManager", quietly = TRUE))
+        install.packages("BiocManager")
+    BiocManager::install("DESeq2")
+
+# Other tools
+- CIBERSORT: https://github.com/Moonerss/CIBERSORT (run via web or R script)
