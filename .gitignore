@@ -8,6 +8,3 @@ all_data.tar.xz
 # Python cache files
 __pycache__/
 *.py[cod]
-
-# Images
-images/
