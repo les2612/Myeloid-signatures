@@ -1,15 +1,16 @@
 import io
+from typing import List
 
 import boto3
 import pandas as pd
 
 
 def load_expressions_from_s3(
-    samples,
-    output_path="expression_matrix.csv",
-    bucket="bostongene-deconv-oss-rnaseq",
-    verbose=True,
-):
+    samples: List[str],
+    output_path: str = "expression_matrix.csv",
+    bucket: str = "bostongene-deconv-oss-rnaseq",
+    verbose: bool = True
+) -> pd.DataFrame:
     """
     Download expression matrices from S3 for a given list of samples.
 

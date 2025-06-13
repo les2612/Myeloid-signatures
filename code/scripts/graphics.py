@@ -1,4 +1,5 @@
 import math
+from typing import Optional, List
 
 import matplotlib.cm as cm
 import matplotlib.colors as mcolors
@@ -9,7 +10,11 @@ from scipy.stats import friedmanchisquare, mannwhitneyu
 from sklearn.metrics import roc_auc_score
 
 
-def plot_boxplot(expr, grouping, output_image="boxplots.png"):
+def plot_boxplot(
+    expr: pd.DataFrame,
+    grouping: pd.Series,
+    output_image: str = "boxplots.png"
+) -> None:
     """
     Plots boxplots with strip plots for expression signatures grouped by a condition.
 
@@ -127,8 +132,11 @@ def plot_boxplot(expr, grouping, output_image="boxplots.png"):
 
 
 def plot_signature_dynamic(
-    valid_signatures, plot_data, time_order, output_path=None
-):
+    valid_signatures: List[str],
+    plot_data: List[pd.DataFrame],
+    time_order: List[str],
+    output_path: Optional[str] = None
+) -> None:
     """
     Plots time-course dynamics of signature z-scores across multiple timepoints.
 
@@ -223,7 +231,7 @@ def plot_cibersort_stacked(
     title: str = "CIBERSORT Stacked Barplot",
     figsize=(16, 6),
     filename: str = None,
-):
+) -> None:
     """
     Plots a stacked barplot of CIBERSORT cell fractions, grouped and sorted by a selected cell type.
 

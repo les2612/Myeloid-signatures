@@ -1,4 +1,5 @@
 import os
+from typing import List
 
 import pandas as pd
 
@@ -9,7 +10,7 @@ def create_deseq_metadata(
     dataset_col="Dataset",
     sample_col=None,
     output_dir="metadata",
-):
+)-> List[str]:
     """
     Create DESeq2-compatible metadata tables for all datasets that contain both
     Healthy and disease samples.

@@ -96,7 +96,7 @@ def plot_pca(
     ncols: int = 4,
     groupby=["Dataset", "Diagnosis"],
     savepath=None,
-):
+)-> None:
     """
     Universal PCA plotting function with flexible grouping for color labeling.
 
@@ -106,6 +106,10 @@ def plot_pca(
         per_dataset (bool): If True, plot per dataset separately
         ncols (int): Columns per row in per_dataset mode
         groupby (list[str] or str): Column(s) to group points by (for color/legend)
+
+    Returns:
+        None
+            Displays the PCA plot(s) and optionally saves to disk.
     """
     if pca_data.empty:
         print("No PCA data to plot.")
@@ -161,7 +165,7 @@ def _plot_single_pca(
     title: str = "",
     groupby=["Dataset", "Diagnosis"],
     legend_inside: bool = False,
-):
+)-> None:
     """
     Helper to plot a PCA scatter with flexible color grouping.
 
@@ -171,6 +175,11 @@ def _plot_single_pca(
         title (str): Plot title
         groupby (list[str]): Column(s) to group by for color
         legend_inside (bool): Whether to place legend inside plot
+    
+    Returns:
+        None:
+            Displays the PCA plot(s) and, if `savepath` is provided,
+            saves to disk.
     """
     group_labels = df[groupby].astype(str).agg(" | ".join, axis=1)
     df = df.copy()

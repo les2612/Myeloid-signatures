@@ -1,5 +1,6 @@
 # Large data files
 data/*.csv
+all_data.tar.xz
 
 # Jupyter notebook checkpoints (recursively ignore everywhere)
 **/.ipynb_checkpoints/

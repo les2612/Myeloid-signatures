@@ -1,15 +1,16 @@
+from typing import Optional, List
 import pandas as pd
 
 
 def compute_gene_signature_correlations(
-    expr,
-    ssgsea_scores,
-    signatures=None,
-    output_file="gene_signature_correlations.csv",
-    top_n=100,
-    method="pearson",
-    positive_only=True,
-):
+    expr: pd.DataFrame,
+    ssgsea_scores: pd.DataFrame,
+    signatures: Optional[List[str]] = None,
+    output_file: str = "gene_signature_correlations.csv",
+    top_n: int = 100,
+    method: str = "pearson",
+    positive_only: bool = True
+) -> None:
     """
     Computes correlations between gene expression and ssGSEA signature scores.
 

@@ -36,7 +36,33 @@ results_folder = "../data/deseq/results"
 os.makedirs(results_folder, exist_ok=True)
 
 
-def run_deseq2(expr: pd.DataFrame, meta_path: str):
+def run_deseq2(
+    expr: pd.DataFrame,
+    meta_path: str
+) -> None:
+    """
+    Run DESeq2 differential expression analysis for a single metadata file.
+
+    Parameters:
+        expr (pd.DataFrame):
+            Gene count matrix (genes × samples), with integer counts.
+        meta_path (str):
+            Path to a CSV file containing sample metadata. Must have columns:
+            - "sample_id": sample identifiers matching columns of `expr`
+            - "condition": factor levels (e.g., "Healthy", disease labels)
+
+    Side Effects:
+        - Reads the metadata CSV.
+        - Converts `expr` and metadata to R objects and runs DESeq2 via rpy2.
+        - Writes the following files to `results_folder` (global variable):
+            * `{results_folder}/deseq2_{dataset}.csv`
+            * `{results_folder}/deseq2_{dataset}_DEGs.csv`
+            * `{results_folder}/deseq2_{dataset}_TOP10.csv`
+        - Prints progress and warnings to stdout.
+
+    Returns:
+        None
+    """
     file = os.path.basename(meta_path)
     meta = pd.read_csv(meta_path)
     if "sample_id" not in meta.columns or "condition" not in meta.columns:

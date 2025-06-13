@@ -1,6 +1,8 @@
 import os
+from typing import Optional, Union, List, Dict
 
 import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -8,7 +10,13 @@ from sklearn.cluster import AgglomerativeClustering
 from sklearn.preprocessing import StandardScaler
 
 
-def compute_correlation(expr, ann, dataset_name, genes_of_interest):
+def compute_correlation(
+    expr: pd.DataFrame,
+    ann: pd.DataFrame,
+    dataset_name: str,
+    genes_of_interest: List[str] | Set[str]
+) -> Optional[pd.DataFrame]:
+    
     """
     Compute the Pearson correlation matrix for a subset of genes within a specific dataset.
 
@@ -69,13 +77,13 @@ def compute_correlation(expr, ann, dataset_name, genes_of_interest):
 
 
 def draw_clustermaps(
-    expr,
-    ann,
-    genes_file_path,
-    datasets,
-    output_prefix="clustermap",
-    output_dir=".",
-):
+    expr: pd.DataFrame,
+    ann: pd.DataFrame,
+    genes_file_path: str,
+    datasets: List[str],
+    output_prefix: str = "clustermap",
+    output_dir: str = "."
+) -> None:
     """
     Builds and saves correlation clustermaps for selected datasets using a gene list.
 
@@ -126,7 +134,12 @@ def draw_clustermaps(
         plot_clustermap(corr, title, filename, output_dir)
 
 
-def plot_clustermap(data, title, filename, output_dir="."):
+def plot_clustermap(
+    data: pd.DataFrame,
+    title: str,
+    filename: str,
+    output_dir: str = "."
+) -> None:
     """
     Plots and saves a hierarchical clustermap from a correlation matrix.
 
@@ -176,14 +189,14 @@ def plot_clustermap(data, title, filename, output_dir="."):
 
 
 def plot_clustermap_with_clusters(
-    data,
-    title,
-    filename,
-    output_dir=".",
-    row_colors=None,
-    col_colors=None,
-    cluster_colors=None,
-):
+    data: pd.DataFrame,
+    title: str,
+    filename: str,
+    output_dir: str = ".",
+    row_colors: Optional[Union[pd.Series, List[str]]] = None,
+    col_colors: Optional[Union[pd.Series, List[str]]] = None,
+    cluster_colors: Optional[Dict[str, str]] = None
+) -> None:
     """
     Plots and saves a clustermap with optional row/column and cluster color annotations.
 
@@ -233,8 +246,6 @@ def plot_clustermap_with_clusters(
         g.fig.suptitle(title, fontsize=14, y=1.02)
 
         if cluster_colors:
-            from matplotlib.patches import Patch
-
             legend_patches = [
                 Patch(facecolor=color, edgecolor="black", label=label)
                 for label, color in cluster_colors.items()
@@ -255,7 +266,9 @@ def plot_clustermap_with_clusters(
         print(f"Error while generating the map: {e}")
 
 
-def fisher_z(corr):
+def fisher_z(
+        corr: Union[float, np.ndarray]
+        ) -> Union[float, np.ndarray]:
     """
     Applies Fisher Z-transformation to a correlation value or matrix.
 
@@ -271,7 +284,9 @@ def fisher_z(corr):
     return np.arctanh(corr)
 
 
-def inverse_fisher_z(z):
+def inverse_fisher_z(
+    z: Union[float, np.ndarray],
+) -> Union[float, np.ndarray]:
     """
     Applies the inverse Fisher Z-transformation.
 
@@ -287,15 +302,15 @@ def inverse_fisher_z(z):
 
 
 def draw_consensus_clustermap(
-    expr,
-    ann,
-    genes_file_path,
-    datasets,
-    output_prefix="consensus",
-    output_dir=".",
-    n_clusters=20,
-    min_corr=0.55,
-):
+    expr: pd.DataFrame,
+    ann: pd.DataFrame,
+    genes_file_path: str,
+    datasets: List[str],
+    output_prefix: str = "consensus",
+    output_dir: str = ".",
+    n_clusters: int = 20,
+    min_corr: float = 0.55,
+) -> Dict[int, List[str]]:
     """
     Builds and saves a consensus clustermap from multiple datasets using gene correlations.
 
